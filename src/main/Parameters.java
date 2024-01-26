@@ -1,4 +1,5 @@
-package src;
+package main;
+
 public class Parameters{
   
     public double LENGTH1;
