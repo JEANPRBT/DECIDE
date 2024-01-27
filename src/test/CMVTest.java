@@ -6,7 +6,7 @@ import org.junit.Test;
 public class CMVTest {
     int numPoints = 5;
     Point2D[] points = new Point2D[numPoints];
-    Parameters parameters = new Parameters();
+    Parameters parameters = Parameters.DEFAULT;
     @Test
     public void LIC3PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
@@ -15,7 +15,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 1);
         points[4] = new Point2D.Double(1, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertTrue(cmv.getCMV()[3]);
+        assertTrue(cmv.getVector()[3]);
     }
     @Test
     public void LIC3NegativeTest(){
@@ -25,7 +25,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(3, 3);
         points[4] = new Point2D.Double(4, 4);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertFalse(cmv.getCMV()[3]);
+        assertFalse(cmv.getVector()[3]);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 1);
         points[4] = new Point2D.Double(1, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertTrue(cmv.getCMV()[4]);
+        assertTrue(cmv.getVector()[4]);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(-1, -10);
         points[4] = new Point2D.Double(4, 8);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertFalse(cmv.getCMV()[4]);
+        assertFalse(cmv.getVector()[4]);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 1);
         points[4] = new Point2D.Double(1, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertTrue(cmv.getCMV()[5]);
+        assertTrue(cmv.getVector()[5]);
     }
 
     @Test
@@ -69,6 +69,6 @@ public class CMVTest {
         points[3] = new Point2D.Double(4, 0);
         points[4] = new Point2D.Double(5, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertFalse(cmv.getCMV()[5]);
+        assertFalse(cmv.getVector()[5]);
     }
 }
