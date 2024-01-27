@@ -9,7 +9,7 @@ import java.util.Arrays;
  * to one Launch Interception Condition (LIC) each.
  */
 public final class CMV {
-    private final boolean[] cmv;
+    private boolean[] cmv;
     private final int numPoints;
     private final Point2D[] points;
     private final Parameters parameters;
@@ -29,12 +29,41 @@ public final class CMV {
     }
 
     /**
+     * Getter for CMV.
+     * @return the boolean array of all LICs representing the CMV.
+     */
+    public boolean[] getVector() {
+        return cmv;
+    }
+
+    /**
+     * Setter for CMV, making it easier for testing purposes.
+     * @param vector: the boolean vector to set
+     */
+    public void setVector(boolean[] vector){
+        assert(vector.length == 15);
+        this.cmv = vector;
+    }
+
+    /**
+     * Getter for the number of true conditions in the CMV.
+     * @return the number of true conditions out of 15 in the CMV.
+     */
+    public int getTrueConditions(){
+        int count = 0;
+        for (boolean b : cmv){
+            if (b) count++;
+        }
+        return count;
+    }
+
+    /**
      * Setter for the LIC n°3.
      * "There exists at least one set of three consecutive data points that are the vertices of a triangle
      * with area greater than AREA1.
      * (0 ≤ AREA1)"
      */
-    public void setLIC3(){
+    private void setLIC3(){
         this.cmv[3] = false;
         for (int i = 0; i < numPoints - 2; i++){
             Point2D p1 = this.points[i], p2 = this.points[i + 1], p3 = this.points[i + 2];
@@ -58,19 +87,19 @@ public final class CMV {
      *  is in quadrant I.
      * (2 ≤ Q_PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)"
      */
-    public void setLIC4(){
-        this.cmv[4] = false;
-        int Q_POINTS = this.parameters.q_pts, QUADS = this.parameters.quads;
+    private void setLIC4(){
+        cmv[4] = false;
+        int Q_POINTS = parameters.q_pts, QUADS = parameters.quads;
         for (int i = 0; i < numPoints - Q_POINTS; i++) {
             int[] quadrants = new int[4];
             for (int j = 0; j < Q_POINTS; j++) {
-                Point2D p = this.points[i + j];
+                Point2D p = points[i + j];
                 int quadrantIndex = (p.getX() >= 0 ? 0 : 2) + (p.getY() >= 0 ? 0 : 1);
                 quadrants[quadrantIndex] = 1;
             }
             int sum = Arrays.stream(quadrants).sum();
             if (sum >= QUADS) {
-                this.cmv[4] = true;
+                cmv[4] = true;
                 break;
             }
         }
@@ -81,34 +110,14 @@ public final class CMV {
      * "There exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[i + 1],Y[i + 1]), such
      * that X[j] - X[i] < 0."
      */
-    public void setLIC5(){
-        this.cmv[5] = false;
+    private void setLIC5(){
+        cmv[5] = false;
         for (int i = 0; i < numPoints - 1; i++){
-            Point2D p1 = this.points[i], p2 = this.points[i + 1];
+            Point2D p1 = points[i], p2 = points[i + 1];
             if (p2.getX() - p1.getX() < 0) {
-                this.cmv[5] = true;
+                cmv[5] = true;
                 break;
             }
         }
-    }
-
-    /**
-     * Getter for CMV.
-     * @return the boolean array of all LICs representing the CMV.
-     */
-    public boolean[] getCMV() {
-        return cmv;
-    }
-
-    /**
-     * Getter for the number of true conditions in the CMV.
-     * @return the number of true conditions out of 15 in the CMV.
-     */
-    public int getTrueConditions(){
-        int count = 0;
-        for (boolean b : this.cmv){
-            if (b) count++;
-        }
-        return count;
     }
 }
