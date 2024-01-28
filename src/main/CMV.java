@@ -26,6 +26,7 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC10();
     }
 
     /**
@@ -118,6 +119,35 @@ public final class CMV {
                 cmv[5] = true;
                 break;
             }
+        }
+    }
+   /*  There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive intervening points, 
+     respectively, that are the vertices of a triangle with area greater than AREA1. 
+    The condition is not met when NUMPOINTS < 5.
+    1≤E PTS,1≤F PTS
+    E PTS+F PTS ≤ NUMPOINTS−3 */
+
+/* ß */
+    private void setLIC10(){
+        cmv[10] = false;
+        if(numPoints < 5){
+            return;
+        }
+        else{
+            for(int i = 0; i < numPoints - (parameters.e_pts + 1) - (parameters.f_pts + 1); i++){
+                Point2D p1 = this.points[i], p2 = this.points[i + parameters.e_pts + 1], p3 = this.points[i + parameters.e_pts + 1 + parameters.f_pts + 1];
+                double AREA = 0.5 * Math.abs(
+                        (p1.getX() * p2.getY() + p2.getX() * p3.getY() + p3.getX() * p1.getY()) -
+                        (p1.getX() * p3.getY() + p2.getX() * p1.getY() + p3.getX() * p2.getY())
+                );
+                
+                if (AREA > this.parameters.area1) {
+                    this.cmv[10] = true;
+                    break;
+                }
+            }
+
+
         }
     }
 }
