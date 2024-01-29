@@ -255,17 +255,6 @@ public final class CMV {
     public boolean[] getCMV() {
         return cmv;
     }
-
-    /**
-     * Getter for the number of true conditions in the CMV.
-     * @return the number of true conditions out of 15 in the CMV.
-     */
-    public int getTrueConditions(){
-        int count = 0;
-        for (boolean b : this.cmv){
-            if (b) count++;
-        }
-        return count;
    /*  There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive intervening points, 
      respectively, that are the vertices of a triangle with area greater than AREA1. 
     The condition is not met when NUMPOINTS < 5.
