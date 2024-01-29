@@ -22,6 +22,7 @@ public final class CMV {
         this.numPoints = numPoints;
         this.points = points;
         this.parameters = parameters;
+
         setLIC0();
         setLIC1();
         setLIC2();
@@ -30,7 +31,9 @@ public final class CMV {
         setLIC5();
         setLIC9();
         setLIC10();
+        setLIC11();
     }
+
 
     /**
      * Getter for CMV.
@@ -289,5 +292,30 @@ public final class CMV {
                 }
             }
         }
+    }
+    /* There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
+    exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
+    condition is not met when NUMPOINTS < 3.
+        1 ≤ G PTS ≤ NUMPOINTS−2 */
+
+    /**
+     * Setter for LIC11 
+     */
+    public void setLIC11(){
+        this.cmv[11] = false;
+        // The condition is not met when NUMPOINTS < 3.
+        if(this.numPoints < 3){
+            return;
+        }
+        else{
+            for(int i = 0; i < numPoints - (parameters.g_pts + 1); i++){
+                Point2D p1 = this.points[i], p2 = this.points[i+parameters.g_pts+1];
+                if(p1.getX() > p2.getX()){
+                    this.cmv[11] = true;
+                    break;
+                }
+            }
+            return;
+        }    
     }
 }
