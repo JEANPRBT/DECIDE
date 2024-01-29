@@ -29,6 +29,7 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC8();
         setLIC9();
         setLIC10();
         setLIC11();
@@ -92,7 +93,7 @@ public final class CMV {
         for (int i = 0; i < numPoints - 2; i++){
             Point2D p1 = this.points[i], p2 = this.points[i + 1], p3 = this.points[i + 2];
 
-           boolean res = LIC1Helper(p1, p2, p3);
+           boolean res = circleContain(p1, p2, p3);
            if (res == false){
             this.cmv[1] = true;
             break;
@@ -102,7 +103,7 @@ public final class CMV {
 
         }
     }
-    public boolean LIC1Helper(Point2D p1, Point2D p2,Point2D p3){
+    public boolean circleContain(Point2D p1, Point2D p2,Point2D p3){
         double r = 0;
         double d12 = Math.hypot(p1.getX()-p2.getX(), p1.getY()-p2.getY());
         double d23 = Math.hypot(p2.getX()-p3.getX(), p2.getY()-p3.getY());
@@ -117,7 +118,6 @@ public final class CMV {
         
         r = (d12 * d23  * d13) / (Math.sqrt((d12 + d13 + d23) * (d12 + d13 - d23) * 
         (d13+d23 - d13) * (d12 + d23 - d13)));
-        System.out.println(r);
         if (r <= this.parameters.radius1){
             return true;
         }
@@ -219,6 +219,30 @@ public final class CMV {
             if (p2.getX() - p1.getX() < 0) {
                 cmv[5] = true;
                 break;
+            }
+        }
+    }
+
+    /**
+     * Setter for LIC n°8
+     * "There exists at least one set of three data points separated by exactly A PTS and B PTS consecutive 
+     * intervening points, respectively, that cannot be contained within or on a circle of radius RADIUS1. 
+     * The condition is not met when NUMPOINTS < 5.
+     * 1≤A PTS,1≤B PTS
+     * A PTS+B PTS ≤ (NUMPOINTS−3)"
+     */
+    private void setLIC8(){
+        cmv[8] = false;
+
+        if (1 > this.parameters.a_pts || this.parameters.a_pts > this.parameters.b_pts || 1 > this.parameters.b_pts || (this.parameters.a_pts + this.parameters.b_pts) > (numPoints - 3)) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < numPoints - this.parameters.a_pts - this.parameters.b_pts - 2; i++) {
+            Point2D p1 = points[i], p2 = points[i + this.parameters.a_pts + 1], p3 = points[i + this.parameters.a_pts + this.parameters.b_pts + 2];
+            if (!circleContain(p1, p2, p3)) {
+                cmv[8] = true;
+                return;
             }
         }
     }

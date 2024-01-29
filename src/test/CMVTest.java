@@ -154,6 +154,39 @@ public class CMVTest {
         assertFalse(cmv.getVector()[5]);
 
     }
+
+    @Test
+    public void LIC8PositiveTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(0, 1);
+        points[2] = new Point2D.Double(1, 0);
+        points[3] = new Point2D.Double(1, 1);
+        points[4] = new Point2D.Double(3, 4);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[8]);
+    }
+
+    @Test
+    public void LIC8NegativeTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(2, 3);
+        points[2] = new Point2D.Double(1, 0);
+        points[3] = new Point2D.Double(4, 5);
+        points[4] = new Point2D.Double(0, 1);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[8]);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void LIC8IllegalTest(){
+        Point2D[] points = new Point2D[4];
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 1);
+        points[2] = new Point2D.Double(2, 2);
+        points[3] = new Point2D.Double(3, 3);
+        new CMV(4, points, parameters);
+    }
+
     @Test
     public void LIC9PositiveTest(){
         points[0] = new Point2D.Double(0, 1);
