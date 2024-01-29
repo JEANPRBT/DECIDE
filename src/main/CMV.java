@@ -22,7 +22,9 @@ public final class CMV {
         this.numPoints = numPoints;
         this.points = points;
         this.parameters = parameters;
-
+        setLIC0();
+        setLIC1();
+        setLIC2();
         setLIC3();
         setLIC4();
         setLIC5();
@@ -57,6 +59,101 @@ public final class CMV {
         }
         return count;
     }
+    
+    /**
+     * LIC 0  
+     * There exists at least one set of two consecutive data points that are a distance greater than the length, LENGTH1, apart.
+     * (0 ≤ LENGTH1)
+     */
+    public void setLIC0(){
+        this.cmv[0] = false;
+        double distance = 0;
+        if(this.parameters.length1 < 0 ) throw new IllegalArgumentException();
+
+        for(int i = 0; i < numPoints - 1; i++){
+            Point2D p1 = this.points[i], p2 = this.points[i+1];
+            distance =  Math.hypot(p1.getX()-p2.getX(), p1.getY()-p2.getY());
+            if(distance > this.parameters.length1){
+                this.cmv[0] = true;
+                break;
+            }
+        }
+    }
+    /**
+    * There exists at least one set of three consecutive data points that cannot all be contained within or on a circle of radius RADIUS1.
+    * (0 ≤ RADIUS1)
+    */
+    public void setLIC1(){
+        this.cmv[1] = false;
+        for (int i = 0; i < numPoints - 2; i++){
+            Point2D p1 = this.points[i], p2 = this.points[i + 1], p3 = this.points[i + 2];
+
+           boolean res = LIC1Helper(p1, p2, p3);
+           if (res == false){
+            this.cmv[1] = true;
+            break;
+           }
+           
+            
+
+        }
+    }
+    public boolean LIC1Helper(Point2D p1, Point2D p2,Point2D p3){
+        double r = 0;
+        double d12 = Math.hypot(p1.getX()-p2.getX(), p1.getY()-p2.getY());
+        double d23 = Math.hypot(p2.getX()-p3.getX(), p2.getY()-p3.getY());
+        double d13 = Math.hypot(p1.getX()-p3.getX(), p1.getY()-p3.getY());
+        
+        double crossProduct = (p2.getX() -p1.getX()) * (p3.getY() - p1.getY()) - (p2.getY()-p1.getY()) * (p3.getX() - p1.getX());
+        if (crossProduct == 0){
+            if(d12 + d23 <= 2 * this.parameters.radius1 ||d23 + d13 <= 2 * this.parameters.radius1 || d12 + d13 <= 2 * this.parameters.radius1)
+            return true;
+        }
+        if(d12 == 0 && d13 == 0 && d23 == 0) return true;
+        
+        r = (d12 * d23  * d13) / (Math.sqrt((d12 + d13 + d23) * (d12 + d13 - d23) * 
+        (d13+d23 - d13) * (d12 + d23 - d13)));
+        System.out.println(r);
+        if (r <= this.parameters.radius1){
+            return true;
+        }
+        return false;
+    }
+    /**
+    * There exists at least one set of three consecutive data points which form an angle such that: angle < (PI − EPSILON)
+    * or angle > (PI + EPSILON)
+    * The second of the three consecutive points is always the vertex of the angle. If either the first point or the last point (or both) coincides with the vertex, 
+    * the angle is undefined and the LIC is not satisfied by those three points.
+    * (0 ≤ EPSILON < PI)
+    */
+    public void setLIC2() {
+        this.cmv[2] = false;
+        double EPSILON = this.parameters.epsilon;
+        
+        if (EPSILON < 0 || EPSILON >= Math.PI) {
+            throw new IllegalArgumentException("Invalid EPSILON value");
+        }
+        
+        for (int i = 0; i < numPoints - 2; i++) {
+            Point2D p1 = this.points[i], p2 = this.points[i + 1], p3 = this.points[i + 2];
+
+            // Skip if p1 or p3 coincides with p2
+            if (p1.equals(p2) || p3.equals(p2)) {
+                continue;
+            }
+            Point2D v1 =  new Point2D.Double(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+            Point2D v2 =  new Point2D.Double(p2.getX() - p3.getX(), p2.getY() - p3.getY());
+            double v1Mag = Math.sqrt(v1.getX()*v1.getX() + v1.getY() * v1.getY());
+            double v2Mag = Math.sqrt(v2.getX()*v2.getX() + v2.getY() * v2.getY());
+            double angle = Math.acos((v1.getX() * v2.getX() + v1.getY() * v2.getY())/(v1Mag*v2Mag));
+         
+            if (angle > Math.PI + EPSILON || angle < Math.PI - EPSILON) {
+                this.cmv[2] = true;
+                break;
+            }
+        }
+    }
+    
 
     /**
      * Setter for the LIC n°3.
