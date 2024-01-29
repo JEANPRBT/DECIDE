@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
 
@@ -26,6 +27,7 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC6();
     }
 
     /**
@@ -88,6 +90,46 @@ public final class CMV {
             if (p2.getX() - p1.getX() < 0) {
                 this.cmv[5] = true;
                 break;
+            }
+        }
+    }
+
+    /**
+     * Setter for LIC n°6
+     * "There exists at least one set of N PTS consecutive data points such that at least one of the points lies a 
+     * distance greater than DIST from the line joining the first and last of these N PTS points. If the first and 
+     * last points of these N PTS are identical, then the calculated distance to compare with DIST will be the distance 
+     * from the coincident point to all other points of the N PTS consecutive points. The condition is not met when NUMPOINTS < 3.
+     * (3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)"
+     */
+    public void setLIC6() {
+        this.cmv[6] = false;
+
+        if (this.parameters.dist < 0 || this.parameters.n_pts < 3 || this.parameters.n_pts > numPoints) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < numPoints - this.parameters.n_pts; i++) {
+            Point2D first = this.points[i], last = this.points[i + this.parameters.n_pts];
+            if (first.equals(last)) {
+                for (int j = i+1; j < i + this.parameters.n_pts-1; j++) {
+                    Point2D point = this.points[j];
+                    if (first.distance(point) > this.parameters.dist) {
+                        this.cmv[6] = true;
+                        return;
+                    }
+                }
+            }
+            else {
+                Line2D line = new Line2D.Double();
+                line.setLine(first, last);
+                for (int j = i+1; j < i + this.parameters.n_pts-1; j++) {
+                    Point2D point = this.points[j];
+                    if (line.ptLineDist(point) > this.parameters.dist) {
+                        this.cmv[6] = true;
+                        return;
+                    }
+                }
             }
         }
     }
