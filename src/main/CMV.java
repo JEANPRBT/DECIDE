@@ -28,8 +28,8 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
-        setLIC10();
         setLIC12();
+        setLIC10();
     }
 
     /**

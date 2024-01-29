@@ -88,6 +88,7 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getVector()[2]);
     }
+   
     @Test
     public void LIC3PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
