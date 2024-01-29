@@ -33,8 +33,6 @@ public class CMVTest {
         points[0] = new Point2D.Double(0, 0);
         points[1] = new Point2D.Double(0,1);
         points[2] = new Point2D.Double(0, 2);
-       
-        
         CMV cmv = new CMV(numPoints - 2, points, parameters);
         assertFalse(cmv.getVector()[1]);
     }
@@ -45,7 +43,6 @@ public class CMVTest {
         points[2] = new Point2D.Double(-1, -1);
         points[3] = new Point2D.Double(0, 4);
         points[4] = new Point2D.Double(0, 2);
-        
         CMV cmv = new CMV(numPoints , points, parameters);
         assertFalse(cmv.getVector()[1]);
     }
@@ -54,7 +51,6 @@ public class CMVTest {
         points[0] = new Point2D.Double(0, 0);
         points[1] = new Point2D.Double(6, 6);
         points[2] = new Point2D.Double(-10, -10);
-   
         CMV cmv = new CMV(numPoints - 2, points, parameters);
         assertTrue(cmv.getVector()[1]);
     }
