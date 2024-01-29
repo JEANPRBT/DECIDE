@@ -5,31 +5,206 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class CMVTest {
-    int numPoints = 3;
+    int numPoints = 5;
     Point2D[] points = new Point2D[numPoints];
-    Parameters parameters = new Parameters(1);
+    Parameters parameters = Parameters.DEFAULT;
 
-    /* There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
-    exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
-    condition is not met when NUMPOINTS < 3. */
+    @Test
+    public void LIC0PositiveTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(0, 10);
+        points[2] = new Point2D.Double(1, 0);
+        points[3] = new Point2D.Double(2, 2);
+        points[4] = new Point2D.Double(1, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[0]);
+    }
+    @Test
+    public void LIC0NegativeTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 2);
+        points[2] = new Point2D.Double(2, 4);
+        points[3] = new Point2D.Double(3, 6);
+        points[4] = new Point2D.Double(4, 8);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[0]);
+    }
+    @Test
+    public void LIC1NegativeTest1(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(0,1);
+        points[2] = new Point2D.Double(0, 2);
+       
+        
+        CMV cmv = new CMV(numPoints - 2, points, parameters);
+        assertFalse(cmv.getVector()[1]);
+    }
+    @Test
+    public void LIC1NegativeTest2(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1,1);
+        points[2] = new Point2D.Double(-1, -1);
+        points[3] = new Point2D.Double(0, 4);
+        points[4] = new Point2D.Double(0, 2);
+        
+        CMV cmv = new CMV(numPoints , points, parameters);
+        assertFalse(cmv.getVector()[1]);
+    }
+    @Test
+    public void LIC1PositiveTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(6, 6);
+        points[2] = new Point2D.Double(-10, -10);
+   
+        CMV cmv = new CMV(numPoints - 2, points, parameters);
+        assertTrue(cmv.getVector()[1]);
+    }
+    @Test
+    public void LIC2PositiveTest1(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0);
+        points[2] = new Point2D.Double(1, 1);
+        points[3] = new Point2D.Double(2, 0);
+        points[4] = new Point2D.Double(3, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[2]);
+    }
+    @Test
+    public void LIC2PositiveTest2(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0);
+        points[2] = new Point2D.Double(2, 2);
+        points[3] = new Point2D.Double(3, 0);
+        points[4] = new Point2D.Double(4, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[2]);
+    }
+    @Test
+    public void LIC2NegativeTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0);
+        points[2] = new Point2D.Double(2, 0);
+        points[3] = new Point2D.Double(3, 0);
+        points[4] = new Point2D.Double(4, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[2]);
+    }
+    @Test
+    public void LIC3PositiveTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(0, 2);
+        points[2] = new Point2D.Double(2, 0);
+        points[3] = new Point2D.Double(0, 1);
+        points[4] = new Point2D.Double(1, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[3]);
+    }
+    @Test
+    public void LIC3NegativeTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 1);
+        points[2] = new Point2D.Double(2, 2);
+        points[3] = new Point2D.Double(3, 3);
+        points[4] = new Point2D.Double(4, 4);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[3]);
+    }
+
+    @Test
+    public void LIC4PositiveTest(){
+        points[0] = new Point2D.Double(1, 1);
+        points[1] = new Point2D.Double(-1, -1);
+        points[2] = new Point2D.Double(-1, 1);
+        points[3] = new Point2D.Double(0, 1);
+        points[4] = new Point2D.Double(1, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[4]);
+    }
+
+    @Test
+    public void LIC4NegativeTest(){
+        points[0] = new Point2D.Double(-8, 1);
+        points[1] = new Point2D.Double(2, 2);
+        points[2] = new Point2D.Double(3, 3);
+        points[3] = new Point2D.Double(-1, -10);
+        points[4] = new Point2D.Double(4, 8);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[4]);
+    }
+
+    @Test
+    public void LIC5PositiveTest(){
+        points[0] = new Point2D.Double(1, 1);
+        points[1] = new Point2D.Double(-1, -1);
+        points[2] = new Point2D.Double(-1, 1);
+        points[3] = new Point2D.Double(0, 1);
+        points[4] = new Point2D.Double(1, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[5]);
+    }
+
+    @Test
+    public void LIC5NegativeTest(){
+        points[0] = new Point2D.Double(1, 0);
+        points[1] = new Point2D.Double(2, 0);
+        points[2] = new Point2D.Double(3, 0);
+        points[3] = new Point2D.Double(4, 0);
+        points[4] = new Point2D.Double(5, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[5]);
+
+    }
+    @Test
+    public void LIC9PositiveTest(){
+        points[0] = new Point2D.Double(0, 1);
+        points[1] = new Point2D.Double(2, 0);
+        points[2] = new Point2D.Double(0, 0);
+        points[3] = new Point2D.Double(4, 0);
+        points[4] = new Point2D.Double(1, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[9]);
+    }
+    @Test
+    public void LIC9NegativeTest(){
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0);
+        points[2] = new Point2D.Double(2, 0);
+        points[3] = new Point2D.Double(3, 0);
+        points[4] = new Point2D.Double(4, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[9]);
+    }
+    @Test 
+    public void LIC10PositiveTest(){
+        points[0] = new Point2D.Double(0,0);
+        points[1] = new Point2D.Double(1,1);
+        points[2] = new Point2D.Double(3,10);
+        points[3] = new Point2D.Double(15, 30);
+        points[4] = new Point2D.Double(400,40);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[10]);
+    }
+    @Test 
+    public void LIC10NegativeTest(){
+        points[0] = new Point2D.Double(0,0);
+        points[1] = new Point2D.Double(1,1);
+        points[2] = new Point2D.Double(2,2);
+        points[3] = new Point2D.Double(0.25,0.25);
+        points[4] = new Point2D.Double(0.3,0.3);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[10]);
+
+    }
+
     @Test
     public void LIC11PositiveTest(){
       points[0] = new Point2D.Double(5, 0);
       points[1] = new Point2D.Double(0, 2);
       points[2] = new Point2D.Double(2, 0);
+      points[3] = new Point2D.Double(2, 12);
+      points[4] = new Point2D.Double(2, 12);
       CMV cmv = new CMV(numPoints, points, parameters);
       assertTrue(cmv.getVector()[11]);
-    }
-
-    // should be false when numPoints < 3
-    @Test
-    public void LIC11NegativeTest1(){
-        int fewPoints = 2;
-        Point2D[] lessPoints = new Point2D[fewPoints];
-        lessPoints[0] = new Point2D.Double(5, 0);
-        lessPoints[1] = new Point2D.Double(0, 2);
-        CMV cmv = new CMV(fewPoints, lessPoints, parameters);
-        assertFalse(cmv.getVector()[11]);
     }
 
     @Test
@@ -37,8 +212,9 @@ public class CMVTest {
         points[0] = new Point2D.Double(0, 0);
         points[1] = new Point2D.Double(5, 2);
         points[2] = new Point2D.Double(10, 0);
+        points[3] = new Point2D.Double(100, 10);
+        points[4] = new Point2D.Double(1000, 10);
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getVector()[11]);
     }
-    
 }
