@@ -158,26 +158,25 @@ public class CMVTest {
         parameters.length1 = 2.0;  
         parameters.length2 = 1.0;  
         points[0] = new Point2D.Double(0, 0);
-        points[1] = new Point2D.Double(3, 0); //more than l1
-        points[2] = new Point2D.Double(0.5,0);  // less than l2
+        points[1] = new Point2D.Double(0.5, 0); 
+        points[2] = new Point2D.Double(3,0);  
         points[3] = new Point2D.Double(1, 0); 
         points[4] = new Point2D.Double(2, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
         assertTrue(cmv.getCMV()[12]);
     }
     @Test
-    public void LIC12NegativeTest(){
+    public void LIC12NegativeTest() {
         parameters.k_pts = 1;  
         parameters.length1 = 2.0;  
         parameters.length2 = 1.0;  
         points[0] = new Point2D.Double(0, 0);
-        points[1] = new Point2D.Double(1, 0);  //less than l1
-        points[2] = new Point2D.Double(2.5, 0);  //more than l2
-        points[3] = new Point2D.Double(1, 0); 
-        points[4] = new Point2D.Double(2, 0);
-
+        points[1] = new Point2D.Double(1.5, 0); 
+        points[2] = new Point2D.Double(2, 0);   
+        points[3] = new Point2D.Double(3, 0);   
+        points[4] = new Point2D.Double(4, 0);  
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertFalse(cmv.getCMV()[12]);
+        assertFalse(cmv.getCMV()[12]);  
     }
 
 }
