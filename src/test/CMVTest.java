@@ -7,6 +7,7 @@ public class CMVTest {
     int numPoints = 5;
     Point2D[] points = new Point2D[numPoints];
     Parameters parameters = new Parameters();
+   
     @Test
     public void LIC3PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
@@ -71,4 +72,32 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getCMV()[5]);
     }
+    @Test
+    public void LIC12PositiveTest() {
+        parameters.k_pts = 1;  
+        parameters.length1 = 2.0;  
+        parameters.length2 = 1.0;  
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(3, 0); //more than l1
+        points[2] = new Point2D.Double(0.5,0);  // less than l2
+        points[3] = new Point2D.Double(1, 0); 
+        points[4] = new Point2D.Double(2, 0);
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getCMV()[12]);
+    }
+    @Test
+    public void LIC12NegativeTest(){
+        parameters.k_pts = 1;  
+        parameters.length1 = 2.0;  
+        parameters.length2 = 1.0;  
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0);  //less than l1
+        points[2] = new Point2D.Double(2.5, 0);  //more than l2
+        points[3] = new Point2D.Double(1, 0); 
+        points[4] = new Point2D.Double(2, 0);
+
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getCMV()[12]);
+    }
+
 }

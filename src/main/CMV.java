@@ -26,6 +26,7 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC12();
     }
 
     /**
@@ -92,6 +93,34 @@ public final class CMV {
         }
     }
 
+    /**
+     * Setter for the LIC n°12.
+     * There exists at least one set of two data points, separated by exactly K PTS consecutive intervening points, which are a distance greater than the length, LENGTH1, apart.
+     * In addi- tion, there exists at least one set of two data points (which can be the same or different from the two data points just mentioned), separated by exactly K PTS consecutive intervening points, that are a distance less than the length, LENGTH2, apart.
+     * Both parts must be true for the LIC to be true. The condition is not met when NUMPOINTS < 3.
+     * 0 ≤ LENGTH2
+     */
+    public void setLIC12(){
+        boolean c_1 = false, c_2= false;  /*c_1/2= conditions */
+        int k_pts = this.parameters.k_pts;
+        if (numPoints < k_pts + 2){
+            return;
+        }
+        for (int i = 0; i< numPoints - k_pts - 1; i++){
+            Point2D p1 = this.points[i], p2 = this.points[i + k_pts + 1];
+            double distance = p1.distance(p2);
+            if (distance > this.parameters.length1) {
+                c_1 = true;
+            }
+            if (distance < this.parameters.length2) {
+                c_2 = true;
+            }
+            if (c_1 && c_2){
+                this.cmv[12] = true;
+                break;
+            }
+        }
+    }
     /**
      * Getter for CMV.
      * @return the boolean array of all LICs representing the CMV.
