@@ -30,6 +30,7 @@ public final class CMV {
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC7();
         setLIC6();
         setLIC9();
         setLIC10();
@@ -225,7 +226,29 @@ public final class CMV {
         }
     }
 
-    /**
+     /**
+     * Setter for LIC n°7
+     * "There exists at least one set of two data points separated by exactly K PTS consecutive in- tervening points 
+     * that are a distance greater than the length, LENGTH1, apart. The condition is not met when NUMPOINTS < 3.
+     * 1 ≤ K PTS ≤ (NUMPOINTS − 2)"
+     */
+    private void setLIC7() {
+        cmv[7] = false;
+
+        if (1 > this.parameters.k_pts || this.parameters.k_pts > (numPoints - 2) || numPoints < 3) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < numPoints - this.parameters.k_pts - 1; i++) {
+            Point2D p1 = points[i], p2 = points[i + this.parameters.k_pts + 1];
+            if (p1.distance(p2) > this.parameters.length1) {
+                cmv[7] = true;
+                return;
+            }
+        }
+
+    }
+  
      * Setter for LIC n°6
      * "There exists at least one set of N PTS consecutive data points such that at least one of the points lies a 
      * distance greater than DIST from the line joining the first and last of these N PTS points. If the first and 
@@ -264,7 +287,30 @@ public final class CMV {
             }
         }
     }
-    
+  
+         /**
+     * Setter for LIC n°7
+     * "There exists at least one set of two data points separated by exactly K PTS consecutive in- tervening points 
+     * that are a distance greater than the length, LENGTH1, apart. The condition is not met when NUMPOINTS < 3.
+     * 1 ≤ K PTS ≤ (NUMPOINTS − 2)"
+     */
+    private void setLIC7() {
+        cmv[7] = false;
+
+        if (1 > this.parameters.k_pts || this.parameters.k_pts > (numPoints - 2) || numPoints < 3) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < numPoints - this.parameters.k_pts - 1; i++) {
+            Point2D p1 = points[i], p2 = points[i + this.parameters.k_pts + 1];
+            if (p1.distance(p2) > this.parameters.length1) {
+                cmv[7] = true;
+                return;
+            }
+        }
+
+    }
+
     /* There exists at least one set of three data points separated by exactly C PTS and D PTS 
     consecutive intervening points, respectively, that form an angle such that: 
     angle < (PI−EPSILON) or angle > (PI+EPSILON)
