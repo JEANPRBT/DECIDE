@@ -35,6 +35,7 @@ public final class CMV {
         setLIC8();
         setLIC9();
         setLIC10();
+        setLIC14();
         setLIC11();
         setLIC12();
     }
@@ -413,6 +414,7 @@ public final class CMV {
             return;
         }    
     }
+
      /**
      * Setter for the LIC n°12.
      * There exists at least one set of two data points, separated by exactly K PTS consecutive intervening points, which are a distance greater than the length, LENGTH1, apart.
@@ -440,5 +442,50 @@ public final class CMV {
                 break;
             }
         }
+    }
+
+    /*
+     * 4. There exists at least one set of three data points, separated by exactly E PTS and F PTS consecutive intervening points,  
+     * respectively, that are the vertices of a triangle with area greater than AREA1. In addition, there exist three data points
+     * (which can be the same or different from the three data points just mentioned) separated by exactly E PTS and F PTS 
+     * consecutive intervening points, respectively, that are the vertices of a triangle with area less than AREA2. Both parts 
+     * must be true for the LIC to be true. The condition is not met when NUMPOINTS < 5.
+     * 0 ≤ AREA2
+     */
+    public void setLIC14() {
+        this.cmv[14] = false;
+        if (numPoints < 5) {
+            return; 
+        }
+        boolean c_1 = false;
+        boolean c_2 = false;
+        for (int i = 0; i <= numPoints - 3; i++) {
+            int eIndex = i + 1 + this.parameters.e_pts;
+            int fIndex = eIndex + 1 + this.parameters.f_pts;
+            if (fIndex < numPoints) {
+                Point2D p1 = this.points[i];
+                Point2D p2 = this.points[eIndex];
+                Point2D p3 = this.points[fIndex];
+                double triangleArea = AreaOfTriangle(p1, p2, p3);
+                if (triangleArea > this.parameters.area1) {
+                    c_1 = true;
+                }
+                if (triangleArea < this.parameters.area2) {
+                    c_2 = true;
+                }
+                if (c_1 && c_2) {
+                    this.cmv[14] = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    private double AreaOfTriangle(Point2D p1, Point2D p2, Point2D p3) {
+        double a = p1.distance(p2);
+        double b = p2.distance(p3);
+        double c = p3.distance(p1);
+        double s = (a + b + c) / 2;
+        return Math.sqrt(s * (s - a) * (s - b) * (s - c)); 
     }
 }

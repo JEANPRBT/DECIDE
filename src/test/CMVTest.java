@@ -337,4 +337,34 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getCMV()[12]);  
     }
+    
+    @Test
+    public void LIC14PositiveTest() {
+        parameters.e_pts = 1;
+        parameters.f_pts = 1;
+        parameters.area1 = 1.0; 
+        parameters.area2 = 10.0; 
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0); 
+        points[2] = new Point2D.Double(0, 1); 
+        points[3] = new Point2D.Double(1, 1); 
+        points[4] = new Point2D.Double(10, 0); 
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertTrue(cmv.getVector()[14]);
+    }
+    @Test
+    public void LIC14NegativeTest() {
+        parameters.e_pts = 1;
+        parameters.f_pts = 1;
+        parameters.area1 = 5.0; 
+        parameters.area2 = 0.5; 
+        numPoints = 5;
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1, 0); 
+        points[2] = new Point2D.Double(0, 2); 
+        points[3] = new Point2D.Double(1, 2); 
+        points[4] = new Point2D.Double(2, 0); 
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getVector()[14]);
+    }
 }
