@@ -25,6 +25,19 @@ public class PUM {
         }
 
         /**
+         * Public constructor to directly set the values of PUM
+         * for testing purposes
+         * @param lcm
+         * @param cmv
+         * @param matrix
+         */
+        public PUM(LCM lcm, CMV cmv, boolean[][] matrix){
+                this.lcm = lcm;
+                this.cmv = cmv;
+                this.matrix = matrix;
+        }
+
+        /**
          * Getter for the PUM.
          * @return the Preliminary Unlocking Matrix (PUM)
          */
