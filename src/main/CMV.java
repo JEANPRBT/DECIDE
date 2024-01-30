@@ -38,6 +38,7 @@ public final class CMV {
         setLIC14();
         setLIC11();
         setLIC12();
+        setLIC13();
     }
 
 
@@ -387,6 +388,14 @@ public final class CMV {
                     break;
                 }
             }
+        }    
+    }    
+    /**
+     * Getter for CMV.
+     * @return the boolean array of all LICs representing the CMV.
+     */
+    public boolean[] getCMV() {
+        return cmv
         }
     }
     /* There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
@@ -414,7 +423,6 @@ public final class CMV {
             return;
         }    
     }
-
      /**
      * Setter for the LIC n°12.
      * There exists at least one set of two data points, separated by exactly K PTS consecutive intervening points, which are a distance greater than the length, LENGTH1, apart.
@@ -423,7 +431,7 @@ public final class CMV {
      * 0 ≤ LENGTH2
      */
     public void setLIC12(){
-        boolean c_1 = false, c_2= false;  /*c_1/2= conditions */
+        boolean c_1 = false, c_2= false;  //c_1/2= conditions 
         int k_pts = this.parameters.k_pts;
         if (numPoints < k_pts + 2){
             return;
@@ -443,6 +451,51 @@ public final class CMV {
             }
         }
     }
+
+    /*
+     * Setter for the LIC n°13. 
+     * There exists at least one set of three data points, separated by exactly
+     *  A PTS and B PTS consecutive intervening points, respectively, that cannot be contained within or 
+     * on a circle of radius RADIUS1. In addition, there exists at least one set of three data points 
+     * (which can be the same or different from the three data points just mentioned) separated by exactly 
+     * A PTS and B PTS consecutive intervening points, respectively, that can be contained in or on a circle of 
+     * radius RADIUS2. Both parts must be true for the LIC to be true. The condition is not met when NUMPOINTS < 5.
+     * 0 ≤ RADIUS2
+     */
+    
+    public void setLIC13(){
+        this.cmv[13]= false;
+        if (numPoints<5){ //condition is not met
+            return;
+        }
+        for(int i=0; i <= numPoints-3; i++){
+            int a_index = i + 1 + this.parameters.a_pts;
+            int b_index = a_index + 1 + this.parameters.b_pts;
+
+            if (b_index < numPoints){
+                Point2D  pointA = this.points[i];
+                Point2D  pointB = this.points[a_index];
+                Point2D  pointC = this.points[b_index];
+                boolean c1 = !pointsInCircle(pointA,pointB,pointC, this.parameters.radius1);
+                boolean c2 = pointsInCircle(pointA,pointB,pointC,this.parameters.radius2);
+                if (c1 && c2){
+                    this.cmv[13] = true;
+                    break;
+                }
+            }
+        }   
+    }
+    private boolean pointsInCircle(Point2D pointA, Point2D pointB,  Point2D pointC, double radius){
+        double l_a = pointA.distance(pointB); // lengths of sides of triangle
+        double l_b =  pointB.distance(pointC);
+        double l_c = pointC.distance(pointA);
+        double s = (l_a+l_b+l_c)/2;
+        if (l_a + l_b == l_c || l_a + l_c == l_b || l_b + l_c == l_a) {
+            return false; // Collinear points cannot form a circumcircle with finite radius
+        }
+        double area = Math.sqrt((s - l_a)*(s - l_b)*(s - l_c)); // area of  triangle
+        double circum_radius= (l_a*l_b*l_c)/(4*area);
+        return circum_radius <= radius; // checks if c_r is less than or equal to given radius
 
     /*
      * 4. There exists at least one set of three data points, separated by exactly E PTS and F PTS consecutive intervening points,  
