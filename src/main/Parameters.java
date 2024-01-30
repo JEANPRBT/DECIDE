@@ -3,7 +3,7 @@ package main;
 public class Parameters {
 
     // Default value making it easier for testing purposes.
-    public static Parameters DEFAULT = new Parameters(1d, 1d, 1d, 1d, 3, 3,
+    public static Parameters DEFAULT = new Parameters(3d, 4d, 0d, 1d, 3, 3,
             1d, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1d,
             1d, 1d);
     public double length1;
