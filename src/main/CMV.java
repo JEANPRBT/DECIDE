@@ -1,7 +1,7 @@
 package main;
-
 import java.awt.geom.Point2D;
 import java.util.Arrays;
+
 
 /**
  * @author Rickard Cornell, Elissa Arias Sosa, Raahitya Botta, Zaina Ramadan, Jean Perbet
@@ -22,14 +22,18 @@ public final class CMV {
         this.numPoints = numPoints;
         this.points = points;
         this.parameters = parameters;
+
         setLIC0();
         setLIC1();
         setLIC2();
         setLIC3();
         setLIC4();
         setLIC5();
+        setLIC9();
         setLIC10();
+        setLIC11();
     }
+
 
     /**
      * Getter for CMV.
@@ -218,6 +222,50 @@ public final class CMV {
             }
         }
     }
+
+    /* There exists at least one set of three data points separated by exactly C PTS and D PTS 
+    consecutive intervening points, respectively, that form an angle such that: 
+    angle < (PI−EPSILON) or angle > (PI+EPSILON)
+    The second point of the set of three points is always the vertex of the angle. 
+    If either the first point or the last point (or both) coincide with the vertex, 
+    the angle is undefined and the LIC is not satisfied by those three points. 
+    When NUMPOINTS < 5, the condition is not met.
+    1 ≤ C PTS, 1 ≤ D PTS
+    C PTS+D PTS ≤ NUMPOINTS−3 */
+    private void setLIC9(){
+        cmv[9] = false;
+        if(numPoints < 5){
+            return;
+        }
+        else{
+              for(int i = 0; i < numPoints - (parameters.c_pts + 1) - (parameters.d_pts + 1); i++){
+
+                Point2D p1 = this.points[i], p2 = this.points[i + parameters.c_pts + 1], p3 = this.points[i + parameters.c_pts + 1 + parameters.d_pts + 1];
+                Point2D p1p2 = new Point2D.Double(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+                Point2D p2p3 = new Point2D.Double(p2.getX() - p3.getX(), p2.getY() - p3.getY());
+
+                if((p1.getX() == p2.getX() && p1.getY() == p2.getY()) || (p3.getX() == p2.getX() && p3.getY() == p2.getY())){
+                    continue;
+                }
+                else{
+                    double magp1p2 = Math.sqrt((Math.pow(p1p2.getX(), 2) + Math.pow(p1p2.getY(), 2)));
+                    double magp2p3 = Math.sqrt((Math.pow(p2p3.getX(), 2) + Math.pow(p2p3.getY(), 2)));
+
+                    double dotProduct = p1p2.getX() * p2p3.getX() + p1p2.getY() * p2p3.getY();
+
+                    double angleInRadians = Math.acos(dotProduct / (magp1p2 * magp2p3));
+
+                    if(angleInRadians < Math.PI - parameters.epsilon || angleInRadians > Math.PI + parameters.epsilon){
+                        cmv[9] = true;
+                        break;
+                    }
+                 }
+
+              }
+          }
+      }
+  
+
    /*  There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive intervening points, 
      respectively, that are the vertices of a triangle with area greater than AREA1. 
     The condition is not met when NUMPOINTS < 5.
@@ -243,8 +291,31 @@ public final class CMV {
                     break;
                 }
             }
-
-
         }
+    }
+    /* There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
+    exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
+    condition is not met when NUMPOINTS < 3.
+        1 ≤ G PTS ≤ NUMPOINTS−2 */
+
+    /**
+     * Setter for LIC11 
+     */
+    public void setLIC11(){
+        this.cmv[11] = false;
+        // The condition is not met when NUMPOINTS < 3.
+        if(this.numPoints < 3){
+            return;
+        }
+        else{
+            for(int i = 0; i < numPoints - (parameters.g_pts + 1); i++){
+                Point2D p1 = this.points[i], p2 = this.points[i+parameters.g_pts+1];
+                if(p1.getX() > p2.getX()){
+                    this.cmv[11] = true;
+                    break;
+                }
+            }
+            return;
+        }    
     }
 }
