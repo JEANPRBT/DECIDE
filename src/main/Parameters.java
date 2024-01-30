@@ -1,7 +1,11 @@
 package main;
 
-public class Parameters{
-  
+public class Parameters {
+
+    // Default value making it easier for testing purposes.
+    public static Parameters DEFAULT = new Parameters(1d, 1d, 1d, 1d, 3, 3,
+            1d, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1d,
+            1d, 1d);
     public double length1;
     public double radius1;
     public double epsilon;
@@ -23,29 +27,29 @@ public class Parameters{
     public double area2;
 
     /**
-     * Default constructor for Parameters, initializing it to pre-defined valid values
-     * making it easier for testing purposes.
+     * Default constructor for Parameters.
      */
-    public Parameters() {
-        this.length1 = 1;
-        this.radius1 = 1;
-        this.epsilon = 1;
-        this.area1 = 1;
-        this.q_pts = 3;
-        this.quads = 3;
-        this.dist = 1;
-        this.n_pts = 3;
-        this.k_pts = 1;
-        this.a_pts = 1;
-        this.b_pts = 1;
-        this.c_pts = 1;
-        this.d_pts = 1;
-        this.e_pts = 1;
-        this.f_pts = 1;
-        this.g_pts = 1;
-        this.length2 = 1;
-        this.radius2 = 1;
-        this.area2 = 1;
+    public Parameters(double length1, double radius1, double epsilon, double area1, int q_pts, int quads,
+                      double dist, int n_pts, int k_pts, int a_pts, int b_pts, int c_pts, int d_pts, int e_pts,
+                      int f_pts, int g_pts, double length2, double radius2, double area2) {
+        this.length1 = length1;
+        this.radius1 = radius1;
+        this.epsilon = epsilon;
+        this.area1 = area1;
+        this.q_pts = q_pts;
+        this.quads = quads;
+        this.dist = dist;
+        this.n_pts = n_pts;
+        this.k_pts = k_pts;
+        this.a_pts = a_pts;
+        this.b_pts = b_pts;
+        this.c_pts = c_pts;
+        this.d_pts = d_pts;
+        this.e_pts = e_pts;
+        this.f_pts = f_pts;
+        this.g_pts = g_pts;
+        this.length2 = length2;
+        this.radius2 = radius2;
+        this.area2 = area2;
     }
-    //TODO: add other relevant constructors
 }
