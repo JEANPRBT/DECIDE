@@ -222,7 +222,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 0);
         points[4] = new Point2D.Double(0, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertTrue(cmv.getCMV()[6]);
+        assertTrue(cmv.getVector()[6]);
     }
 
     @Test
@@ -233,7 +233,7 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 0);
         points[4] = new Point2D.Double(0, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertTrue(cmv.getCMV()[6]);
+        assertTrue(cmv.getVector()[6]);
     }
 
     @Test
@@ -244,6 +244,6 @@ public class CMVTest {
         points[3] = new Point2D.Double(0, 1);
         points[4] = new Point2D.Double(0, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
-        assertFalse(cmv.getCMV()[6]);
+        assertFalse(cmv.getVector()[6]);
     }
 }
