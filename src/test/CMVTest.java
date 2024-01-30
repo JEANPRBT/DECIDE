@@ -9,7 +9,7 @@ public class CMVTest {
     Point2D[] points = new Point2D[numPoints];
 
     Parameters parameters = Parameters.DEFAULT;
-
+    
     @Test
     public void LIC0PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
