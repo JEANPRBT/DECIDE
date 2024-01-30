@@ -209,10 +209,11 @@ public class CMVTest {
     }
 
 
+    @Test
     public void LIC8PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
         points[1] = new Point2D.Double(0, 1);
-        points[2] = new Point2D.Double(1, 0);
+        points[2] = new Point2D.Double(-2, -1);
         points[3] = new Point2D.Double(1, 1);
         points[4] = new Point2D.Double(3, 4);
         CMV cmv = new CMV(numPoints, points, parameters);
