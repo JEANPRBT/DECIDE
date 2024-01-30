@@ -39,7 +39,6 @@ public final class CMV {
         setLIC11();
         setLIC12();
         setLIC13();
-        
     }
 
 
@@ -229,8 +228,13 @@ public final class CMV {
             }
         }
     }
-
-
+    /**
+     * Getter for CMV.
+     * @return the boolean array of all LICs representing the CMV.
+     */
+    public boolean[] getCMV() {
+        return cmv;
+    }
   
      * Setter for LIC n°6
      * "There exists at least one set of N PTS consecutive data points such that at least one of the points lies a 
@@ -359,7 +363,6 @@ public final class CMV {
           }
       }
   
-
    /*  There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive intervening points, 
      respectively, that are the vertices of a triangle with area greater than AREA1. 
     The condition is not met when NUMPOINTS < 5.
@@ -493,6 +496,7 @@ public final class CMV {
         double area = Math.sqrt((s - l_a)*(s - l_b)*(s - l_c)); // area of  triangle
         double circum_radius= (l_a*l_b*l_c)/(4*area);
         return circum_radius <= radius; // checks if c_r is less than or equal to given radius
+
     /*
      * 4. There exists at least one set of three data points, separated by exactly E PTS and F PTS consecutive intervening points,  
      * respectively, that are the vertices of a triangle with area greater than AREA1. In addition, there exist three data points

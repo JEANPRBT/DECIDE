@@ -85,6 +85,7 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getVector()[2]);
     }
+   
     @Test
     public void LIC3PositiveTest(){
         points[0] = new Point2D.Double(0, 0);
@@ -150,6 +151,7 @@ public class CMVTest {
         assertFalse(cmv.getVector()[5]);
     }
 
+    @Test
     public void LIC6PositiveTest1() {
         points[0] = new Point2D.Double(0, 0);
         points[1] = new Point2D.Double(0, 2);
@@ -275,6 +277,19 @@ public class CMVTest {
         assertTrue(cmv.getCMV()[10]);
     }
     @Test
+    public void LIC12NegativeTest() {
+        parameters.k_pts = 1;  
+        parameters.length1 = 2.0;  
+        parameters.length2 = 1.0;  
+        points[0] = new Point2D.Double(0, 0);
+        points[1] = new Point2D.Double(1.5, 0); 
+        points[2] = new Point2D.Double(2, 0);   
+        points[3] = new Point2D.Double(3, 0);   
+        points[4] = new Point2D.Double(4, 0);  
+        CMV cmv = new CMV(numPoints, points, parameters);
+        assertFalse(cmv.getCMV()[12]);  
+    }
+    @Test
     public void LIC11PositiveTest(){
       points[0] = new Point2D.Double(5, 0);
       points[1] = new Point2D.Double(0, 2);
@@ -295,7 +310,6 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getVector()[11]);
     }
-
     @Test
     public void LIC12PositiveTest() {
         parameters.k_pts = 1;  
@@ -308,6 +322,8 @@ public class CMVTest {
         points[4] = new Point2D.Double(2, 0);
         CMV cmv = new CMV(numPoints, points, parameters);
         assertTrue(cmv.getCMV()[12]);
+    }
+
     @Test
     public void LIC12NegativeTest() {
         parameters.k_pts = 1;  
@@ -350,8 +366,7 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getCMV()[13]);
     }
-=======
-    
+   
     @Test
     public void LIC14PositiveTest() {
         parameters.e_pts = 1;
@@ -366,6 +381,7 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertTrue(cmv.getVector()[14]);
     }
+
     @Test
     public void LIC14NegativeTest() {
         parameters.e_pts = 1;
@@ -381,6 +397,4 @@ public class CMVTest {
         CMV cmv = new CMV(numPoints, points, parameters);
         assertFalse(cmv.getVector()[14]);
     }
-
-
 }
