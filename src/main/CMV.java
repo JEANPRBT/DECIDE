@@ -87,6 +87,8 @@ public final class CMV {
             }
         }
     }
+
+
     /**
     * Setter for LIC n°1.
     * "There exists at least one set of three consecutive data points that cannot all be contained within or
