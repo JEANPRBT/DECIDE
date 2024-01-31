@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 
 public final class Main {
 
-    static int numPoints = 3;
+    static int numPoints = 5;
     static Point2D[] points = new Point2D[]{
             new Point2D.Double(10, 5),
             new Point2D.Double(2, 6),
