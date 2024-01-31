@@ -4,13 +4,17 @@ import static org.junit.Assert.assertThrows;
 
 public class ParametersTest {
     @Test
-    public void Numpointslessthan5() {
+    public void Numpointslessthan2() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Parameters(1, 1, -0, 1, 3, 2, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4);
+            new Parameters(1, 1, -0, 1, 3, 2, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         });
     }
-
-
+    @Test
+    public void NumpointsGreaterthan100() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Parameters(1, 1, -0, 1, 3, 2, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 101);
+        });
+    }
     @Test
     public void EpsilonLessThanZero() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -61,6 +65,12 @@ public class ParametersTest {
         });
     }
     @Test
+    public void QptsgreaterThanNP() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Parameters(1, 1, 0.1, 1, 6, 2, 1, 3, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5);
+        });
+    }
+    @Test
     public void KptsLessThan1() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Parameters(1, 1, 1, 1, 3, 2, 1, 3, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5);
@@ -94,6 +104,18 @@ public class ParametersTest {
     public void FptsLessThan1() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Parameters(1, 1, 1, 1, 3, 2, 1, 3, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 5);
+        });
+    }
+    @Test
+    public void NptsLessThan3() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Parameters(1, 1, -0, 1, 3, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5);
+        });
+    }
+    @Test
+    public void NptsGreaterThanNP() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Parameters(1, 1, -0, 1, 3, 2, 1, 6, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5);
         });
     }
     @Test
