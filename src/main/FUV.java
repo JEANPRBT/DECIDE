@@ -31,7 +31,7 @@ public class FUV {
     }
 
     /**
-     * Setter for FUV. Generaded from the PUM and PUV.
+     * Setter for FUV. Generated from the PUM and PUV.
      * The input PUV indicates whether the corresponding LIC is to be 
      * considered as a factor in signaling interceptor launch.
      */

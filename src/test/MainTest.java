@@ -1,20 +1,11 @@
-import main.CMV;
-import main.FUV;
-import main.LCM;
-import main.PUM;
-import main.PUV;
-import main.Decide;
+import main.*;
 
 import static org.junit.Assert.*;
-import main.Parameters;
+
 import org.junit.Test;
 import java.awt.geom.Point2D;
 
-public class DecideTest {
-
-    Parameters parameters = Parameters.DEFAULT;
-    private boolean[] puvVector;
-    private String[][] lcmVector;
+public class MainTest {
 
     @Test
     public void NegativeDecideTest() {
@@ -26,14 +17,11 @@ public class DecideTest {
             new Point2D.Double(0, 1),
             new Point2D.Double(4,6)
         };
-
-        CMV cmv = new CMV(numPoints, points, parameters);
+        Parameters parameters = Parameters.DEFAULT;
         LCM lcm = LCM.DEFAULT;
-        PUM pum = new PUM(lcm,cmv);
         PUV puv = PUV.DEFAULT;
-        FUV fuv = new FUV(pum, puv);
-        Decide Launch = new Decide(fuv);
-        assertFalse(Launch.getBoolean());
+
+        assertFalse(Main.computeResult(numPoints, points, parameters, lcm, puv));
     }
 
     @Test
@@ -80,10 +68,9 @@ public class DecideTest {
             new Point2D.Double(10, 0)
         };
 
-        puvVector = new boolean[]{
-            true, true, false, true, true, false, true, true, true, true, true, true, false, false, false
-        };
-        lcmVector = new String[][]{
+        Parameters parameters = Parameters.DEFAULT;
+
+        String[][] lcmVector = new String[][]{
             {"OR", "NOTUSED", "NOTUSED", "OR", "NOTUSED", "OR", "AND", "AND", "NOTUSED", "AND", "OR", "NOTUSED", "OR", "OR", "OR"},
             {"NOTUSED", "NOTUSED", "AND", "AND", "NOTUSED", "OR", "AND", "AND", "AND", "OR", "OR", "NOTUSED", "OR", "OR", "OR"},
             {"NOTUSED", "AND", "AND", "NOTUSED", "OR", "OR", "AND", "OR", "NOTUSED", "AND", "AND", "OR", "OR", "OR", "NOTUSED"},
@@ -100,14 +87,14 @@ public class DecideTest {
             {"OR", "OR", "OR", "NOTUSED", "OR", "NOTUSED", "OR", "OR", "OR","OR", "NOTUSED", "NOTUSED", "OR", "NOTUSED", "OR"},
             {"OR", "OR", "NOTUSED", "OR", "OR", "OR", "OR", "NOTUSED", "NOTUSED", "OR", "OR", "NOTUSED", "OR", "OR", "OR"}
         };
-
-        CMV cmv = new CMV(numPoints, points, parameters);
         LCM lcm = new LCM(lcmVector);
-        PUM pum = new PUM(lcm,cmv);
+
+        boolean[] puvVector = new boolean[]{
+                true, true, false, true, true, false, true, true, true, true, true, true, false, false, false
+        };
         PUV puv = new PUV(puvVector);
-        FUV fuv = new FUV(pum, puv);
-        Decide Launch = new Decide(fuv);
-        assertTrue(Launch.getBoolean());
+
+        assertTrue(Main.computeResult(numPoints, points, parameters, lcm, puv));
     }
 }
 

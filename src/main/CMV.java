@@ -57,18 +57,6 @@ public final class CMV {
         assert(vector.length == 15);
         this.cmv = vector;
     }
-
-    /**
-     * Getter for the number of true conditions in the CMV.
-     * @return the number of true conditions out of 15 in the CMV.
-     */
-    public int getTrueConditions(){
-        int count = 0;
-        for (boolean b : cmv){
-            if (b) count++;
-        }
-        return count;
-    }
     
     /**
      * Setter for LIC n°0.

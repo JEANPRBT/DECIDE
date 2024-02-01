@@ -35,12 +35,12 @@ public class Parameters {
 
         if (numPoints < 2 || numPoints > 100) throw new IllegalArgumentException("NUMPOINTS must be at least 2 and less than or equal to 100.");                    
         if (epsilon < 0 || epsilon >= Math.PI) throw new IllegalArgumentException("Epsilon must be in the range 0-PI.");
-        if (length1 < 0) throw new IllegalArgumentException("LENGTH1 should'nt be negative.");
-        if (length2 < 0) throw new IllegalArgumentException("LENGTH2 should'nt be negative."); 
-        if (area1 < 0) throw new IllegalArgumentException("AREA1 should'nt be negative.");
-        if (area2 < 0) throw new IllegalArgumentException("AREA2 should'nt be negative."); 
-        if (radius1 < 0) throw new IllegalArgumentException("RADIUS1 should'nt be negative.");
-        if (radius2 < 0) throw new IllegalArgumentException("RADIUS2 should'nt be negative.");
+        if (length1 < 0) throw new IllegalArgumentException("LENGTH1 shouldn't be negative.");
+        if (length2 < 0) throw new IllegalArgumentException("LENGTH2 shouldn't be negative.");
+        if (area1 < 0) throw new IllegalArgumentException("AREA1 shouldn't be negative.");
+        if (area2 < 0) throw new IllegalArgumentException("AREA2 shouldn't be negative.");
+        if (radius1 < 0) throw new IllegalArgumentException("RADIUS1 shouldn't be negative.");
+        if (radius2 < 0) throw new IllegalArgumentException("RADIUS2 shouldn't be negative.");
         if (q_pts < 2 || q_pts > numPoints ) throw new IllegalArgumentException("Q_PTS must be at least 2 and less than numpoints");
         if (k_pts < 1 || k_pts > (numPoints - 2)) throw new IllegalArgumentException("K_PTS must be in the range [1, NUMPOINTS - 2].");
         if (c_pts < 1) throw new IllegalArgumentException("C_PTS must be at least 1.");
@@ -52,9 +52,7 @@ public class Parameters {
         if (e_pts + f_pts > numPoints - 3) throw new IllegalArgumentException("The sum of E_PTS and F_PTS must be less than or equal to NUMPOINTS - 3.");
         if (g_pts < 1 || g_pts > numPoints - 2) throw new IllegalArgumentException("G_PTS must be in the range [1, NUMPOINTS - 2].");
         if (quads < 1 || quads > 3) throw new IllegalArgumentException("QUADS must be in the range [1, 3].");
-        if (dist < 0) throw new IllegalArgumentException("DIST should'nt be negative.");
-       
-                       
+        if (dist < 0) throw new IllegalArgumentException("DIST shouldn't be negative.");
 
         this.length1 = length1;
         this.radius1 = radius1;

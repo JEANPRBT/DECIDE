@@ -9,7 +9,6 @@ public class PUM {
 
         private final LCM lcm;
         private final CMV cmv;
-
         private final boolean[][] matrix;
 
         /**
@@ -26,10 +25,10 @@ public class PUM {
 
         /**
          * Public constructor to directly set the values of PUM
-         * for testing purposes
-         * @param lcm
-         * @param cmv
-         * @param matrix
+         * for testing purposes.
+         * @param lcm the Logical Connector Matrix (LCM)
+         * @param cmv the Conditions Met Vector (CMV)
+         * @param matrix the
          */
         public PUM(LCM lcm, CMV cmv, boolean[][] matrix){
                 this.lcm = lcm;
