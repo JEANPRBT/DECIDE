@@ -53,8 +53,6 @@ public class Parameters {
         if (g_pts < 1 || g_pts > numPoints - 2) throw new IllegalArgumentException("G_PTS must be in the range [1, NUMPOINTS - 2].");
         if (quads < 1 || quads > 3) throw new IllegalArgumentException("QUADS must be in the range [1, 3].");
         if (dist < 0) throw new IllegalArgumentException("DIST should'nt be negative.");
-       
-                       
 
         this.length1 = length1;
         this.radius1 = radius1;

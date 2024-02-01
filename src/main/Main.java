@@ -1,31 +1,43 @@
 
 package main;
+import org.w3c.dom.ls.LSOutput;
+
 import java.awt.geom.Point2D;
 
 
 
 public final class Main {
-
-    static int numPoints = 5;
-    static Point2D[] points = new Point2D[]{
-            new Point2D.Double(10, 5),
-            new Point2D.Double(2, 6),
-            new Point2D.Double(2, 3),
-            new Point2D.Double(0, 1),
-            new Point2D.Double(4,6)
-    };
-    static Parameters parameters = Parameters.DEFAULT;
-  
-    // add other relevant parameters 
     public static void main(String[] args) {
-        CMV cmv = new CMV(numPoints, points, parameters);
+
+        // ------------------------------------ Define inputs ------------------------------------ //
+        int numPoints = 5;
+        Point2D[] points = new Point2D[]{
+                new Point2D.Double(10, 5),
+                new Point2D.Double(2, 6),
+                new Point2D.Double(2, 3),
+                new Point2D.Double(0, 1),
+                new Point2D.Double(4,6)
+        };
+        Parameters parameters = Parameters.DEFAULT;
         LCM lcm = LCM.DEFAULT;
-        PUM pum = new PUM(lcm,cmv);
         PUV puv = PUV.DEFAULT;
-        FUV fuv = new FUV(pum, puv);
-        new Decide(fuv);
+
+        // ---------------------------- Compute and print the result ---------------------------- //
+        boolean res = computeResult(numPoints, points, parameters, lcm, puv);
+        if (res) System.out.println("YES");
+        else System.out.println("NO");
 
     }
 
+    public static boolean computeResult(int numPoints, Point2D[] points, Parameters parameters, LCM lcm, PUV puv){
+        CMV cmv = new CMV(numPoints, points, parameters);
+        PUM pum = new PUM(lcm, cmv);
+        FUV fuv = new FUV(pum, puv);
 
+        boolean[] vector = fuv.getVector();
+        for (boolean elem : vector) {
+            if (!elem) return false;
+        }
+        return true;
+    }
 }
